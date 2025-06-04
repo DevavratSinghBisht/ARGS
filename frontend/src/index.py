@@ -8,7 +8,7 @@ import requests
 import uuid
 
 def main():
-    st.set_page_config(page_title="Automated Radiology Report Generation and Suggestion (ARGS)", layout="wide")
+    st.set_page_config(page_title="ARGS", layout="wide")
 
     # Apply CSS for consistent image and layout
     st.markdown("""
@@ -50,7 +50,7 @@ def main():
         </style>
     """, unsafe_allow_html=True)
 
-    st.title("Radiology Prediction UI")
+    st.title("Automated Radiology Report Generation and Suggestion (ARGS)")
 
     uid = str(uuid.uuid4())
     st.caption(f"Generated UID: `{uid}`")
