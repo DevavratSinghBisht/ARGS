@@ -6,18 +6,33 @@ import xml.etree.ElementTree as ET
 from typing import List, Dict, Optional
 
 
-def get_summary_params(text: str) -> Dict[str, int]:
+def get_summary_params(fron_text:str, lat_text:str, chex_text:str) -> Dict[str, int]:
     """Adaptive parameters based on input length"""
+    
+    # Word counts
+    fron_count = len(fron_text.strip().split())
+    lat_count = len(lat_text.strip().split())
+    chex_count = len(chex_text.strip().split())
 
-    text_word_count = len(text.split())
-    if text_word_count <= 10:  # Very short texts
-        return {"min_length": 3, "max_length": 8}
-    elif text_word_count <= 50:  # Short-medium texts
-        return {"min_length": 8, "max_length": 25}
-    elif text_word_count <= 100:  # Medium-long texts
-        return {"min_length": 15, "max_length": 40}
-    else:  # Very long texts
-        return {"min_length": 20, "max_length": 60}
+    # Determine minimum length
+    if fron_count and lat_count:
+        min_length = min(fron_count, lat_count)
+    elif fron_count:
+        min_length = fron_count
+    elif lat_count:
+        min_length = lat_count
+    else:
+        min_length = 0  # fallback minimum
+
+    # Determine maximum length based on longest findings and chex_text
+    longest_findings = max(fron_count, lat_count)
+    max_length = (longest_findings + chex_count) * 3
+
+    # Ensure max_length is safely above min_length
+    if max_length <= min_length:
+        max_length = min_length + 5
+
+    return {"min_length": min_length, "max_length": max_length}
 
 def replace_indication_placeholder(text: str, substitute:str) -> str:
   """

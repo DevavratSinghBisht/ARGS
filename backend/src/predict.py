@@ -99,7 +99,7 @@ def getPrediction(data: List[Dict[str, str]], report_generator: ReportGenerator,
 
         print("Findings_combined: ", findings_combined_text)
 
-        findings_summary_params = get_summary_params(findings_combined_text)
+        findings_summary_params = get_summary_params(fron_gen_findings, lat_gen_findings, chex_text)
         min_findings_length = findings_summary_params["min_length"]
         max_findings_length = findings_summary_params["max_length"]
         final_findings = summarizer.summarize(findings_combined_text, min_findings_length, max_findings_length)
@@ -114,7 +114,7 @@ def getPrediction(data: List[Dict[str, str]], report_generator: ReportGenerator,
 
         print("Impression_combined: ", impression_combined_text)
 
-        impression_summary_params = get_summary_params(impression_combined_text)
+        impression_summary_params = get_summary_params(fron_gen_impression, lat_gen_impression, chex_text)
         min_impression_length = impression_summary_params["min_length"]
         max_impression_length = impression_summary_params["max_length"]
         final_impression = summarizer.summarize(impression_combined_text, min_impression_length, max_impression_length)
